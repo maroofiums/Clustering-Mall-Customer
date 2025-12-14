@@ -195,9 +195,3 @@ Use **K-Means for strategic segmentation** and **DBSCAN for exploratory analysis
 
 ---
 
-## Mentor Tip
-
-Recruiters are not only interested in models, but in **how you think**.
-This project clearly demonstrates both **analytical ability** and **business understanding**.
-
----
