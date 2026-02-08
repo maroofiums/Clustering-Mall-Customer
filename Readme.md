@@ -1,197 +1,105 @@
-# Mall Customers Segmentation
+# **Customer Segmentation using K-Means Clustering**
 
-**Clustering Analysis using K-Means and DBSCAN**
+## **Project Overview**
 
-## Project Overview
+This project performs **customer segmentation** for a shopping mall using the **Mall Customers dataset**. The goal is to identify distinct groups of customers based on **Annual Income** and **Spending Score**, which can help the business in:
 
-This project focuses on identifying **meaningful customer segments** using mall customer demographic and behavioral data. The objective is to help businesses improve **targeted marketing, customer engagement, and revenue optimization** through data-driven insights.
+* Targeted marketing campaigns
+* Personalized offers and discounts
+* Better understanding of customer behavior
 
-Two unsupervised learning algorithms — **K-Means** and **DBSCAN** — were applied and compared to understand customer behavior from different perspectives.
-
----
-
-## Problem Statement
-
-The mall had access to customer data containing **Age, Annual Income, and Spending Score**, but faced several challenges:
-
-* Customers were not clearly segmented
-* High-value customers were difficult to identify
-* Outliers and unusual customer behavior were not visible
-
-### Goal
-
-Segment customers into meaningful groups and extract actionable business insights.
+We use **K-Means clustering**, along with data scaling and visualization techniques, to create meaningful customer segments.
 
 ---
 
-## Solution Approach
+## **Dataset**
 
-Unsupervised learning techniques were used in the following stages:
+* **Source:** [Kaggle – Mall Customers Dataset](https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python)
+* **Size:** 200 records
+* **Features:**
 
-1. **Exploratory Data Analysis (EDA)**
+  * `CustomerID` – Unique ID for each customer
+  * `Gender` – Male/Female
+  * `Age` – Age of the customer
+  * `Annual Income (k$)` – Annual income in thousand dollars
+  * `Spending Score (1–100)` – Mall-assigned score based on spending behavior
 
-   * Analyzed feature distributions
-   * Observed relationships and patterns among variables
-
-2. **K-Means Clustering**
-
-   * Used the Elbow Method to determine optimal `k = 5`
-   * Assigned customers to centroid-based clusters
-
-3. **DBSCAN Clustering**
-
-   * Applied density-based clustering
-   * Explicitly identified noise and outliers
-
-4. **Comparison and Interpretation**
-
-   * Compared K-Means and DBSCAN results
-   * Assigned business-friendly segment labels
+**Note:** Only `Annual Income` and `Spending Score` are used for clustering.
 
 ---
 
-## Methodology Workflow
+## **Libraries Used**
 
-```
-Data Loading
-   ↓
-EDA and Feature Scaling
-   ↓
-K-Means (Elbow → Fit → Labeling)
-   ↓
-DBSCAN (eps and min_samples tuning)
-   ↓
-Cluster Profiling (Age, Income, Spending)
-   ↓
-Comparison and Business Insights
+```text
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
 ```
 
 ---
 
-## K-Means Cluster Insights (5 Segments)
+## **Workflow / Methodology**
 
-| Cluster | Segment Name                    | Key Characteristics                         |
-| ------- | ------------------------------- | ------------------------------------------- |
-| 0       | Prudent Older Shoppers          | Older customers, mid-income, moderate spend |
-| 1       | High Income, High Spenders      | Young adults, high income, very high spend  |
-| 2       | Young Low Income, High Spenders | Young customers, low income, high spend     |
-| 3       | Average Balanced Spenders       | Mid-income, moderate spending               |
-| 4       | High Income, Low Spenders       | High income, very low spending              |
+### **Step 1: Data Exploration**
 
-**Note:**
-K-Means assigns every customer to a cluster, even if they do not naturally belong to one.
+* Visualized the distribution of `Annual Income` and `Spending Score`.
+* Checked for missing values and outliers.
 
----
+### **Step 2: Data Scaling**
 
-## DBSCAN Cluster Insights (6 Clusters + Noise)
+* Standardized features using `StandardScaler` to ensure fair contribution in distance calculation.
 
-| Cluster | Segment Description                         |
-| ------- | ------------------------------------------- |
-| -1      | Noise / Outliers (~15%) with mixed behavior |
-| 0       | Young, low income, high spenders            |
-| 1       | Middle-aged, low income, low spenders       |
-| 2       | Older, mid-income, moderate spenders        |
-| 3       | Young, mid-income, balanced spenders        |
-| 4       | High income, high spenders                  |
-| 5       | High income, very low spenders              |
+### **Step 3: Determine Optimal Clusters**
 
-**Note:**
-DBSCAN can isolate unusual customers instead of forcing them into clusters.
+* Used **Elbow Method** to identify the ideal number of clusters (`k`).
+* Verified with **Silhouette Score**.
 
----
+### **Step 4: K-Means Clustering**
 
-## K-Means vs DBSCAN Comparison
+* Applied K-Means to segment customers.
+* Assigned cluster labels to each customer.
 
-### Similarities
+### **Step 5: Visualization**
 
-Both algorithms consistently identified the following customer segments:
+* Plotted 2D scatter plot of clusters.
+* Each cluster represented by a unique color for easy interpretation.
 
-* High income, high spenders
-* Young low income, high spenders
-* High income, low spenders
-* Older moderate spenders
+### **Step 6: Cluster Analysis**
 
-### Key Differences
-
-| Aspect             | K-Means                    | DBSCAN                      |
-| ------------------ | -------------------------- | --------------------------- |
-| Number of Clusters | Fixed (k = 5)              | Automatically determined    |
-| Outliers           | Forced into clusters       | Explicitly labeled as noise |
-| Cluster Shape      | Assumes spherical clusters | Supports arbitrary shapes   |
-| Business Usage     | Simple segmentation        | Deeper behavioral insights  |
+* Calculated mean `Annual Income` and `Spending Score` for each cluster.
+* Interpreted clusters for business insights (e.g., high-income, high-spending customers).
 
 ---
 
-## Key Business Insights
+## **Results / Insights**
 
-### High-Value Customers
+| Cluster | Avg Annual Income | Avg Spending Score | Customer Profile             |
+| ------- | ----------------- | ------------------ | ---------------------------- |
+| 0       | 25k$              | 20                 | Low income, low spending     |
+| 1       | 45k$              | 80                 | Medium income, high spending |
+| 2       | 75k$              | 60                 | High income, medium spending |
+| 3       | 30k$              | 65                 | Low income, high spending    |
+| 4       | 90k$              | 90                 | High income, high spending   |
 
-Young to middle-aged customers with high income and high spending.
-These customers are the primary revenue drivers.
-
-### Untapped Potential
-
-Customers with high income but low spending.
-This indicates an engagement issue rather than a purchasing power issue.
-
-### Spending Is Not Equal to Income
-
-Young customers with low income but high spending.
-This highlights the importance of trends, lifestyle, and psychology.
-
-### Hidden Patterns
-
-Noise points identified by DBSCAN may represent niche, emerging, or irregular customer behavior.
+> The above profiles help the mall target promotions and understand customer behavior.
 
 ---
 
-## Actionable Recommendations
+## **Visualization**
 
-### Target High Income, High Spenders
+![Clusters](link-to-your-plot.png)
 
-* Loyalty and rewards programs
-* Exclusive product launches
-* Personalized shopping experiences
-
-### Activate High Income, Low Spenders
-
-* Customer surveys and feedback
-* Premium services and experiences
-* Concierge-style offerings
-
-### Nurture Young High Spenders
-
-* Discount-driven and trend-based campaigns
-* Student-focused offers
-* Strong social media engagement
-
-### Analyze DBSCAN Noise
-
-* Identify new customer patterns
-* Detect one-time or seasonal visitors
-* Explore niche market opportunities
+* Each color represents a distinct customer segment.
+* X-axis = Annual Income, Y-axis = Spending Score
 
 ---
 
-## Final Conclusion
+## **Conclusion**
 
-This project demonstrates that:
-
-* **K-Means** is effective for clear and structured customer segmentation
-* **DBSCAN** provides deeper insights by identifying outliers and complex patterns
-* Using both together leads to a stronger and more realistic understanding of customer behavior
-
-**Best Practice:**
-Use **K-Means for strategic segmentation** and **DBSCAN for exploratory analysis and discovery**.
+* K-Means effectively segments customers into **distinct groups**.
+* Business can now target marketing strategies per cluster for maximum ROI.
+* Further improvements could include **more features** like age, gender, or purchase history for **multi-dimensional segmentation**.
 
 ---
-
-## Technology Stack
-
-* Python
-* Pandas, NumPy
-* Matplotlib, Seaborn
-* Scikit-learn
-
----
-
