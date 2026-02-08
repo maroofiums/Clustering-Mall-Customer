@@ -14,7 +14,7 @@ We use **K-Means clustering**, along with data scaling and visualization techniq
 
 ## **Dataset**
 
-* **Source:** [Kaggle – Mall Customers Dataset](https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python)
+* **Source:** [Kaggle – Mall Customers Dataset](https://www.kaggle.com/datasets/kandij/mall-customers)
 * **Size:** 200 records
 * **Features:**
 
